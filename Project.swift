@@ -2,10 +2,11 @@ import ProjectDescription
 
 let project = Project(
   name: "SampleDeepTuist",
+  settings: .settings(configurations: [.release(name: "Production"), .debug(name: "Test")]),
   targets: [
     .target(
       name: "SampleDeepTuist",
-      destinations: .macOS,
+      destinations: .iOS,
       product: .app,
       bundleId: "io.tuist.SampleDeepTuist",
       infoPlist: .default,
@@ -17,7 +18,7 @@ let project = Project(
     ),
     .target(
       name: "SampleDeepTuistFramework",
-      destinations: .macOS,
+      destinations: .iOS,
       product: .framework,
       bundleId: "io.tuist.SampleDeepTuistFramework",
       infoPlist: .default,
@@ -25,13 +26,25 @@ let project = Project(
     ),
     .target(
       name: "SampleDeepTuistTests",
-      destinations: .macOS,
+      destinations: .iOS,
       product: .unitTests,
       bundleId: "io.tuist.SampleDeepTuistTests",
       infoPlist: .default,
       sources: ["SampleDeepTuist/Tests/**"],
       resources: [],
       dependencies: [.target(name: "SampleDeepTuist")]
+    ),
+  ],
+  schemes: [
+    .scheme(
+      name: "SampleDeepTuist",
+      buildAction: .buildAction(targets: ["SampleDeepTuist"]),
+      runAction: .runAction(configuration: "Production"),
+    ),
+    .scheme(
+      name: "SampleDeepTuist",
+      buildAction: .buildAction(targets: ["SampleDeepTuist"]),
+      runAction: .runAction(configuration: "Test"),
     ),
   ]
 )

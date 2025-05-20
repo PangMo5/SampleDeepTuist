@@ -2,24 +2,32 @@ import ProjectDescription
 
 let project = Project(
   name: "ChildProject",
+  settings: .settings(configurations: [.release(name: "Production"), .debug(name: "Test")]),
   targets: [
     .target(
       name: "ChildProjectFramework",
-      destinations: .macOS,
+      destinations: .iOS,
       product: .framework,
       bundleId: "io.tuist.ChildProjectFramework",
-      deploymentTargets: .macOS("15.0"),
+      deploymentTargets: .iOS("16.0"),
       sources: ["Sources/Core/**"]
     ),
     .target(
       name: "ChildProject",
-      destinations: .macOS,
+      destinations: .iOS,
       product: .app,
       bundleId: "io.tuist.ChildProject",
-      deploymentTargets: .macOS("15.0"),
+      deploymentTargets: .iOS("16.0"),
       infoPlist: .default,
       sources: ["Sources/ExampleApp/**"],
       dependencies: []
+    ),
+  ],
+  schemes: [
+    .scheme(
+      name: "ChildProject",
+      buildAction: .buildAction(targets: ["ChildProject"]),
+      runAction: .runAction(configuration: "Test"),
     ),
   ]
 )
