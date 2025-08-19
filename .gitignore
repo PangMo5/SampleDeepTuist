@@ -69,4 +69,3 @@ Derived/
 ### Tuist managed dependencies ###
 Tuist/.build
 .nvim/xcodebuild
-buildServer.json
